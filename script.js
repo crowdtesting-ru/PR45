@@ -71,6 +71,16 @@ function formatScenario(text) {
   return `<br>${lines}<br>`;
 }
 
+// Функция для получения правильной ссылки на анкету
+function getFormLink(botType) {
+  if (botType === 'Чат-бот') {
+    return 'https://forms.gle/3qsDwxqhXYJFPtiW6';
+  } else if (botType === 'Голосового бот') {
+    return 'https://forms.gle/BqhGt3PpZc6hM6W6A';
+  }
+  return 'ССЫЛКА'; // Если тип не определен, оставляем как есть
+}
+
 function searchData() {
   if (!excelData || !scenariosData) {
     showNotification('Подождите, данные ещё загружаются...');
@@ -208,6 +218,10 @@ function searchData() {
     ? `Для обращения в бота просим вас использовать номер телефона МТС, <b>который вы указали в анкете</b>: <b>${mtsPhone}</b>`
     : '';
 
+  // Получаем ссылки для анкет
+  const firstFormLink = getFormLink(match['Обращение 1']);
+  const secondFormLink = match['Обращение 2'] ? getFormLink(match['Обращение 2']) : '';
+
   // Финальный HTML
   const result = `
   <div style="font-size: 16px; line-height: 1.5; white-space: pre-line;">
@@ -251,7 +265,7 @@ ${mtsText}
     : `Не найден сценарий для столбца "${firstScenarioColumn}"`
   }
 
-  По завершению просим сразу заполнить анкету по ссылке: ССЫЛКА
+  По завершению просим сразу заполнить анкету по ссылке: <a href="${firstFormLink}" target="_blank">${firstFormLink}</a>
 </div>
 
 ${
@@ -267,7 +281,7 @@ ${
     : `Не найден сценарий для столбца "${secondScenarioColumn}"`
   }
 
-  По завершению просим сразу заполнить анкету по ссылке: ССЫЛКА
+  По завершению просим сразу заполнить анкету по ссылке: <a href="${secondFormLink}" target="_blank">${secondFormLink}</a>
 </div>
 `
     : ''
