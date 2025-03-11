@@ -1,5 +1,7 @@
 :root {
     --primary-color: rgb(61,162,135);
+    --yellow: #FFD700;
+    --yellow-hover: #FFE44D;
     --white: #ffffff;
     --light-gray: #f5f5f5;
     --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -14,28 +16,67 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
 }
 
 .container {
     width: 100%;
-    max-width: 800px;
+    max-width: 500px;
     padding: 20px;
-    position: relative;
+    margin: 0 auto;
+    transform: translateX(-37px);
+    transition: all 0.3s ease;
+}
+
+.container.has-result {
+    max-width: 1200px;
+    display: flex;
+    gap: 15px;
+    padding: 5px;
+    transform: none;
+}
+
+.container:not(.has-result) {
+    display: block;
+    height: auto;
+}
+
+.container:not(.has-result) .search-card {
+    width: 100%;
+    max-width: none;
+}
+
+.container.has-result .search-card {
+    flex: 0 0 220px;
+    margin: 0;
+    height: fit-content;
+    position: sticky;
+    top: 10px;
+    padding: 15px;
+}
+
+.result-container {
+    flex: 1;
+    background: var(--white);
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    display: none;
+    max-width: 900px;
 }
 
 .search-card {
+    width: 100%;
+    max-width: 400px;
     background-color: var(--white);
     border-radius: 15px;
     padding: 2rem;
     box-shadow: var(--shadow);
+    margin: 0 auto;
 }
 
-h1 {
-    color: var(--primary-color);
-    margin: 0 0 2rem 0;
-    font-size: 2rem;
-    text-align: center;
+.container.has-result .search-card h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .search-form {
@@ -45,22 +86,23 @@ h1 {
 }
 
 .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
 }
 
 label {
     color: var(--primary-color);
-    font-weight: 500;
+    display: block;
+    margin-bottom: 0.5rem;
 }
 
 input, select {
+    width: 100%;
     padding: 12px;
     border: 2px solid #e0e0e0;
     border-radius: 8px;
     font-size: 1rem;
-    transition: border-color 0.3s ease;
+    box-sizing: border-box;
 }
 
 input:focus, select:focus {
@@ -68,9 +110,17 @@ input:focus, select:focus {
     border-color: var(--primary-color);
 }
 
+select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+}
+
 button {
     background-color: var(--primary-color);
-    color: var(--white);
+    color: white;
     border: none;
     padding: 14px;
     border-radius: 8px;
@@ -81,29 +131,20 @@ button {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    transition: transform 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 button:hover {
-    transform: translateY(-2px);
+    background-color: rgba(61,162,135,0.9);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .button-icon {
     font-size: 1.2rem;
-}
-
-.result-container {
-    margin-top: 2rem;
-    background-color: var(--white);
-    padding: 2rem;
-    border-radius: 15px;
-    box-shadow: var(--shadow);
-    white-space: pre-line;
-    display: none;
-}
-
-.result-container.active {
-    display: block;
 }
 
 .notification {
@@ -143,6 +184,105 @@ button:hover {
     font-size: 20px;
 }
 
+@media (max-width: 1024px) {
+    .container.has-result {
+        flex-direction: column;
+    }
+
+    .container.has-result .search-card {
+        width: 100%;
+        position: relative;
+        top: 0;
+    }
+}
+
+.section-divider {
+    height: 1px;
+    background: #e0e0e0;
+    margin: 15px 0;
+}
+
+.collapsible-section {
+    background: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+.section-header {
+    background: var(--primary-color);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 12px 12px 0 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.section-header:hover {
+    background-color: rgba(61,162,135,0.9);
+}
+
+.section-header h3 {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.section-header h3:after {
+    content: '▼';
+    width: 24px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+}
+
+.section-header.collapsed h3:after {
+    transform: rotate(-180deg);
+}
+
+.section-content {
+    padding: 10px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.check-section {
+    background: white;
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    margin: 10px 0;
+    border-left: 4px solid var(--primary-color);
+}
+
+.check-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+}
+
+.check-section li {
+    position: relative;
+    padding-left: 20px;
+    margin: 8px 0;
+}
+
+.check-section li:before {
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+}
+
 @media (max-width: 768px) {
     .container {
         padding: 15px;
@@ -165,5 +305,172 @@ button:hover {
         white-space: normal;
         padding: 12px 20px;
         font-size: 14px;
+    }
+}
+
+.companies-list {
+    margin: 5px 0;
+    padding-left: 15px;
+}
+
+.companies-list div {
+    margin: 3px 0;
+}
+
+/* Стили для узкого меню */
+.container.has-result .search-card input {
+    font-size: 14px;
+    padding: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Уменьшаем отступы в узком меню */
+.container.has-result .form-group {
+    margin-bottom: 1rem;
+}
+
+b, strong {
+    font-weight: 700;
+}
+
+/* Убираем маркеры списков */
+.check-section div {
+    list-style: none;
+    padding-left: 0;
+}
+
+/* Стили для вертикальной ориентации на мобильных */
+@media screen and (max-width: 768px) and (orientation: portrait) {
+    .container {
+        padding: 5px;
+        transform: none !important; /* Отключаем сдвиг */
+        width: 100%;
+        max-width: 100%;
+    }
+
+    /* Начальное состояние */
+    .container:not(.has-result) {
+        padding: 10px;
+    }
+
+    .container:not(.has-result) .search-card {
+        padding: 15px;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    /* Состояние с результатом */
+    .container.has-result {
+        flex-direction: column;
+        gap: 10px;
+        padding: 5px;
+    }
+
+    .container.has-result .search-card {
+        width: 100%;
+        max-width: 100%;
+        padding: 10px;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    .result-container {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+
+    /* Уменьшаем все отступы и размеры */
+    .check-section {
+        padding: 8px;
+        margin: 5px 0;
+    }
+
+    .section-content {
+        padding: 8px;
+    }
+
+    .section-divider {
+        margin: 8px 0;
+    }
+
+    input, select, button {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    h3 {
+        font-size: 15px;
+        margin: 5px 0;
+    }
+}
+
+/* Стили для горизонтальной ориентации на мобильных */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    body {
+        min-height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        padding: 10px;
+        transform: none !important; /* Отключаем все трансформации */
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        margin: 0 auto;
+    }
+
+    /* Начальное состояние (только форма) */
+    .container:not(.has-result) {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container:not(.has-result) .search-card {
+        width: 400px; /* Фиксированная ширина */
+        margin: 0 auto;
+    }
+
+    /* Состояние с результатом */
+    .container.has-result {
+        max-width: 100%;
+        gap: 10px;
+        padding: 5px;
+    }
+
+    .container.has-result .search-card {
+        flex: 0 0 300px;
+        position: static;
+        margin: 0;
+    }
+
+    .result-container {
+        flex: 1;
+        max-width: calc(100% - 320px);
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+/* Для очень маленьких экранов */
+@media screen and (max-width: 480px) {
+    .container {
+        padding: 5px;
+    }
+
+    .search-card {
+        padding: 15px;
+    }
+
+    .result-container {
+        padding: 10px;
+        font-size: 13px;
     }
 } 
