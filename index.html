@@ -16,15 +16,14 @@
                     <label for="name">ФИО:</label>
                     <input type="text" id="name" placeholder="Введите ФИО">
                 </div>
-                <div class="form-group">
+                <div class="input-group">
                     <label for="company">Компания:</label>
-                    <select id="company">
-                        <option value="">Выберите компанию</option>
-                        <option value="Мегафон">Мегафон</option>
-                        <option value="МТС">МТС</option>
-                        <option value="Сбербанк">Сбербанк</option>
-                        <option value="Теле2">Теле2</option>
-                        <option value="Т-Банк">Т-Банк</option>                        
+                    <select id="company" class="form-control">
+                        <option value="Сбербанк" selected>Сбербанк</option>
+                        <option value="МТС" disabled>МТС</option>
+                        <option value="Мегафон" disabled>Мегафон</option>
+                        <option value="Теле2" disabled>Теле2</option>
+                        <option value="Т-Банк" disabled>Т-Банк</option>
                     </select>
                 </div>
                 <button id="searchBtn">
