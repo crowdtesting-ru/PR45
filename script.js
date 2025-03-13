@@ -265,7 +265,7 @@ ${mtsText}
     : `Не найден сценарий для столбца "${firstScenarioColumn}"`
   }
 
-  По завершению просим сразу заполнить анкету по ссылке: <a href="${firstFormLink}" target="_blank">${firstFormLink}</a>
+  По завершении просим сразу заполнить анкету по ссылке: <a href="${firstFormLink}" target="_blank">${firstFormLink}</a>
 </div>
 
 ${
@@ -281,7 +281,7 @@ ${
     : `Не найден сценарий для столбца "${secondScenarioColumn}"`
   }
 
-  По завершению просим сразу заполнить анкету по ссылке: <a href="${secondFormLink}" target="_blank">${secondFormLink}</a>
+  По завершении просим сразу заполнить анкету по ссылке: <a href="${secondFormLink}" target="_blank">${secondFormLink}</a>
 </div>
 `
     : ''
